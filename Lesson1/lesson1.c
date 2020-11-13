@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//function decelerations
+
 void printSpecialSquare();
 void stringOrder();
 
