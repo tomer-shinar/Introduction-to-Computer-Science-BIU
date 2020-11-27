@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
 
 typedef enum bool {
     false = 0, true
 } bool;
-
 
 void rhombus();
 
