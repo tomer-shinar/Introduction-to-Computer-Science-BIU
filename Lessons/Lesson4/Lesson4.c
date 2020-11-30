@@ -7,7 +7,7 @@ calculateLength(char* ch) {
 	while (*ch != '\0') {
 		ch++;
 	}
-	printf("address subtraction: 0x%p - 0x%p\n", ctr, ch);
+	printf("address subtraction: 0x%p - 0x%p\n", ch, ctr);
 	return ch - ctr;
 }
 
