@@ -2,7 +2,7 @@
 #include "tilePuzzle.h"
 #include "utils.h"
 
-void test1() {
+void puzzleFailTest() {
 	printWithColor("test 1:", 'b');
 	printf("\n\n");
 	char* initString = "1354672 8";
@@ -19,11 +19,14 @@ void test1() {
 	makeMove(tilePuzzle, "2u");
 	printPuzzle(tilePuzzle);
 	printf("\n\n");
+	makeMove(tilePuzzle, "2u");
+	printPuzzle(tilePuzzle);
+	printf("\n\n");
 	testPuzzle(tilePuzzle);
 	printf("\n");
 }
 
-void test2() {
+void puzzleSolvedTest() {
 	printWithColor("test 2:", 'b');
 	printf("\n\n");
 	char* initString = "123 56478";
@@ -45,6 +48,6 @@ void test2() {
 }
 
 int main() {
-	test1();
-	test2();
+	puzzleFailTest();
+	puzzleSolvedTest();
 }

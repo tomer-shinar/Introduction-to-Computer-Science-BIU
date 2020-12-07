@@ -1,7 +1,6 @@
 #include "tilePuzzle.h"
 
 
-
 bool
 isInbound(int n, int max) {
 	if (0 <= n && n < max) return TRUE;
@@ -13,7 +12,7 @@ createPuzzle(char tilePuzzle[][PUZZLE_ROW_SIZE], char initString[]) {
 	const int initStringLength = strlen(initString);
 	if (initStringLength != PUZZLE_SIZE) return;
 	for (int k = 0; k < initStringLength; ++k) {
-		const int i = k / PUZZLE_ROW_SIZE;
+		const int i = k / (PUZZLE_NUM_OF_ROWS);
 		const int j = k % PUZZLE_ROW_SIZE;
 		tilePuzzle[i][j] = initString[k];
 	}
@@ -67,26 +66,26 @@ isMoveStringValid(char move[]) {
 	if ((move[VAL] < MIN_VAL || move[VAL] > MAX_VAL) && move[VAL] != SPECIAL_VAL) return FALSE;
 	char directions[] = {'L', 'U', 'R', 'D'};
 	const char upperCaseDirection = toupper(move[DIR]);
-	for (int i = 0; i < strlen(directions); ++i) {
+	const int length = strlen(directions);
+	for (int i = 0; i < length; ++i) {
 		if (directions[i] == upperCaseDirection) return TRUE;
 	}
 	return FALSE;
 }
 
-
 void
 makeMove(char tilePuzzle[][PUZZLE_ROW_SIZE], char move[]) {
-	int i, j;
 	if (!isValidMove(tilePuzzle, move)) return;
+	int i, j;
 	bool match = FALSE;
 	for (i = 0; i < PUZZLE_NUM_OF_ROWS; ++i) {
-		for (j = 0; j < PUZZLE_ROW_SIZE; ++j) {
-			if (tilePuzzle[i][j] == move[VAL]) {
-				match = TRUE;
-				break;
-			}
+	  for (j = 0; j < PUZZLE_ROW_SIZE; ++j) {
+		if (tilePuzzle[i][j] == move[VAL]) {
+		  match = TRUE;
+		  break;
 		}
-		if (match) break;
+	  }
+	  if (match) break;
 	}
 	int row = i, col = j;
 	translateDirectionToOffset(move[DIR], &row, &col);
@@ -100,7 +99,7 @@ makeMove(char tilePuzzle[][PUZZLE_ROW_SIZE], char move[]) {
 
 void
 printPuzzle(char tilePuzzle[][PUZZLE_ROW_SIZE]) {
-	for (int j = 0; j<PUZZLE_ROW_SIZE; ++j) {
+	for (int j = 0; j < PUZZLE_ROW_SIZE; ++j) {
 		printf("  __");
 	}
 	printf("\n");
@@ -110,7 +109,7 @@ printPuzzle(char tilePuzzle[][PUZZLE_ROW_SIZE]) {
 			printf("%c | ", tilePuzzle[i][j]);
 		}
 		printf("\n");
-		for (int j=0;j<PUZZLE_ROW_SIZE;++j) {
+		for (int j = 0; j < PUZZLE_ROW_SIZE; ++j) {
 			printf("  __");
 		}
 		printf("\n");
@@ -142,7 +141,7 @@ testPuzzle(char tilePuzzle[][PUZZLE_ROW_SIZE]) {
 	char solvedTilePuzzle[][PUZZLE_ROW_SIZE] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', ' '}};
 	int errors[PUZZLE_SIZE][ERRORS_ROW_SIZE];
 	for (int i = 0; i < PUZZLE_SIZE; ++i) {
-		initArr(errors, ERRORS_ROW_SIZE, ERRORS_DEFAULT_VALUE);
+		initArr(errors[i], ERRORS_ROW_SIZE, ERRORS_DEFAULT_VALUE);
 	}
 	int numOfErrors = 0;
 	for (int i = 0; i < PUZZLE_NUM_OF_ROWS; ++i) {
