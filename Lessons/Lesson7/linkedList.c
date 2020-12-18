@@ -12,6 +12,9 @@
 node* initList() {
     node* lst = (node*) malloc(sizeof(node));
     assert(lst != NULL);
+    (*lst).next = NULL;
+    lst->prev = NULL;
+    lst->val = NULL;
     return lst;
 }
 /**add allocated array to list**/
@@ -24,6 +27,7 @@ void addArray(node* lst, array* arr) {
         lst->next->prev = newNode;
     }
     lst->next = newNode;
+    lst->val = arr;
 }
 /** read new array and add to list*/
 void add(node* lst, int len) {
@@ -33,13 +37,14 @@ void add(node* lst, int len) {
     newArr->arr = (int*) malloc(len*sizeof(int));
     assert(newArr->arr != NULL);
     for (int i = 0; i < len; i++) {
-        scanf("%d", newArr->arr+1);
+        scanf("%d", newArr->arr + i);
     }
     addArray(lst, newArr);
 }
 //note that the next functions have code duplication used only for the example
 /* remove first array in list*/
 void removeFirst(node* lst) {
+    assert(lst!=NULL);
     if (lst->next == NULL) {
         //empty list
         return;
@@ -96,9 +101,9 @@ void removeIfContains(node* lst, int x) {
         {
             node* toRemove = next;
             next = next->next;
-            removeArray(next);
+            removeArray(toRemove);
         } else
-            next->next = next;
+            next = next->next;
     }
 }
 /*return the first array in the list that have length len*/
@@ -107,18 +112,22 @@ array* findByLen(node* lst, int len){
     while(next != NULL) {
         if (next->val->len == len)
             return next->val;
+        next = next->next;
     }
     return NULL;
 }
 /*delete the list*/
 void deleteList(node* lst) {
     while (lst!= NULL) {
-        node* next = lst->next;
-        free(lst->val->arr);
-        free(lst->val);
+        node *next = lst->next;
+        if (lst->val != NULL) {
+            free(lst->val->arr);
+            free(lst->val);
+        }
         free(lst);
         lst = next;
     }
+    //try to find the problem here
 }
 /*returns the length of the list*/
 int getLen(node* lst) {
