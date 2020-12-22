@@ -23,6 +23,8 @@ void addPoint(constArrayList1* lst, point* p) {
 void add(constArrayList1* lst, int x, int y) {
     point* p = (point*) malloc(sizeof(point));
     assert(p!=NULL);
+    p->x = x;
+    p->y = y;
     addPoint(lst, p);
 }
 //remember that the next functions are code duplications for the example

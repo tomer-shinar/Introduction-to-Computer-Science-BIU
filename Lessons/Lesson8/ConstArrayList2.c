@@ -8,6 +8,8 @@
 #include <assert.h>
 
 
+
+
 void addPoint(constArrayList2* lst, point* p) {
     assert(p!=NULL);
     assert(lst->len < SIZE);
@@ -17,6 +19,8 @@ void addPoint(constArrayList2* lst, point* p) {
 void add(constArrayList2* lst, int x, int y) {
     point* p = (point*) malloc(sizeof(point));
     assert(p!=NULL);
+    p->y = y;
+    p->x = x;
     addPoint(lst, p);
 }
 //remember that the next functions are code duplications for the example
@@ -34,6 +38,7 @@ void removeFirst(constArrayList2* lst) {
 void removeLast(constArrayList2* lst) {
     assert(lst->len > 0);
     lst->len--;
+    free(lst->arr[lst->len]);
     lst->arr[lst->len] = NULL;
 }
 /*remove the point in specific index(compare to array not to list) from the list*/
@@ -48,7 +53,8 @@ void removeAtIndex(constArrayList2* lst, int i) {
 }
 /*remove all points with specific x*/
 void removeIfX(constArrayList2* lst, int x) {
-    for (int i = 0; i < lst->len;) {
+    int len = lst->len;
+    for (int i = 0; i < len;) {
         if (lst->arr[i]->x==x)
             removeAtIndex(lst, i);
         else
