@@ -1,0 +1,3 @@
+again this is a text file
+we write some words in the file in seperate lines
+this is the end of t file
